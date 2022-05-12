@@ -1,12 +1,16 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import useSWR from "swr";
-import { fetcher } from "../../config";
+import { fetcher, tmdbAPI } from "../../config";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/scss";
+import MoiveCard from "../movie/MoiveCard";
 
 const MovieDetail = () => {
   const param = useParams();
   const { data } = useSWR(
-    `https://api.themoviedb.org/3/movie/${param.movieId}?api_key=933cdbeaca5c6cb0c8d851b0dea7d9f8`,
+    tmdbAPI.getMovieDetails(param.movieId),
+
     fetcher
   );
   if (!data) return null;
@@ -51,13 +55,16 @@ const MovieDetail = () => {
 
       <MovieCredits></MovieCredits>
       <MovieVideo></MovieVideo>
+      <SimilarMovie></SimilarMovie>
     </div>
   );
 };
+
+// https://api.themoviedb.org/3/movie/${param.movieId}/${type}?api_key=933cdbeaca5c6cb0c8d851b0dea7d9f8`
 function MovieCredits() {
   const param = useParams();
   const { data } = useSWR(
-    `https://api.themoviedb.org/3/movie/${param.movieId}/credits?api_key=933cdbeaca5c6cb0c8d851b0dea7d9f8`,
+    tmdbAPI.getMovieMeta(param.movieId, "credits"),
     fetcher
   );
   if (!data) return null;
@@ -85,7 +92,8 @@ function MovieCredits() {
 function MovieVideo() {
   const param = useParams();
   const { data } = useSWR(
-    `https://api.themoviedb.org/3/movie/${param.movieId}/videos?api_key=933cdbeaca5c6cb0c8d851b0dea7d9f8`,
+    tmdbAPI.getMovieMeta(param.movieId, "videos"),
+    // `https://api.themoviedb.org/3/movie/${param.movieId}/videos?api_key=933cdbeaca5c6cb0c8d851b0dea7d9f8`,
     fetcher
   );
   if (!data) return null;
@@ -112,6 +120,33 @@ function MovieVideo() {
             </div>
           </div>
         ))}
+      </div>
+    </div>
+  );
+}
+
+function SimilarMovie() {
+  const param = useParams();
+  const { data, error } = useSWR(
+    tmdbAPI.getMovieMeta(param.movieId, "similar"),
+    // `https://api.themoviedb.org/3/movie/${param.movieId}/similar?api_key=8933cdbeaca5c6cb0c8d851b0dea7d9f`,
+    fetcher
+  );
+  // console.log(data);
+  if (!data) return null;
+  const { results } = data;
+  return (
+    <div>
+      <h2 className="text-white text-xl font-medium"> Similar Movie</h2>
+      <div className="movie-list">
+        <Swiper grabCursor={"true"} spaceBetween={40} slidesPerView={"auto"}>
+          {results.length > 0 &&
+            results.map((item, index) => (
+              <SwiperSlide key={index}>
+                <MoiveCard item={item}></MoiveCard>
+              </SwiperSlide>
+            ))}
+        </Swiper>
       </div>
     </div>
   );

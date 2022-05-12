@@ -1,11 +1,14 @@
 import React from "react";
+// import { useNavigate } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import useSWR from "swr";
-import { fetcher } from "../../config";
+import { fetcher, tmdbAPI } from "../../config";
+import Button from "../button/Button";
 
 const Banner = () => {
-  const { data, error } = useSWR(
-    `https://api.themoviedb.org/3/movie/upcoming?api_key=933cdbeaca5c6cb0c8d851b0dea7d9f8`,
+  const { data } = useSWR(
+    tmdbAPI.getMovieList("upcoming"),
+    // `https://api.themoviedb.org/3/movie/upcoming?api_key=933cdbeaca5c6cb0c8d851b0dea7d9f8`,
     fetcher
   );
   const movies = data?.results || [];
@@ -24,11 +27,14 @@ const Banner = () => {
 };
 
 function BannerItem({ item }) {
+  // const navigate = useNavigate();
   const { title, poster_path } = item;
+  // console.log(item, "test1");
   return (
     <div className="w-full h-full rounded-lg relative">
       <img
         className=" w-full h-full object-cover rounded-xl object-top"
+        // src={tmdbAPI.getImagesBanner(poster_path)}
         src={`https://image.tmdb.org/t/p/w500/${poster_path}`}
         alt=""
       />
@@ -46,9 +52,8 @@ function BannerItem({ item }) {
             Adventure
           </span>
         </div>
-        <button className="bg-[#F62682] px-4 py-2 rounded-lg mb-5">
-          Watch now
-        </button>
+
+        <Button className={`w-auto`}>Watch now</Button>
       </div>
     </div>
   );

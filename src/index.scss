@@ -28,3 +28,12 @@
 .banner .swiper {
   height: 100%;
 }
+.pangination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  .selected {
+    color: #f62682;
+  }
+}

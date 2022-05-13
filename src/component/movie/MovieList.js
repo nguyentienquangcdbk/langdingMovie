@@ -13,7 +13,7 @@ const MovieList = ({ type = "now_playing" }) => {
   // console.log(error, "lôic");
 
   useEffect(() => {
-    console.log("hello -data :", data);
+    // console.log("hello -data :", data);
     data != null ? setMovies(data.results) : setMovies([]);
     // setMovies(data.results);
   }, [data]);

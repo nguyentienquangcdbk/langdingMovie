@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 // import { useNavigate } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import useSWR from "swr";
@@ -27,15 +28,15 @@ const Banner = () => {
 };
 
 function BannerItem({ item }) {
-  // const navigate = useNavigate();
-  const { title, poster_path } = item;
+  const navigate = useNavigate();
+  const { title, poster_path, id } = item;
   // console.log(item, "test1");
   return (
     <div className="w-full h-full rounded-lg relative">
       <img
         className=" w-full h-full object-cover rounded-xl object-top"
-        // src={tmdbAPI.getImagesBanner(poster_path)}
-        src={`https://image.tmdb.org/t/p/w500/${poster_path}`}
+        src={tmdbAPI.getImagesBanner(poster_path)}
+        // src={`https://image.tmdb.org/t/p/w500/${poster_path}`}
         alt=""
       />
       <div className="absolute inset-0 bg-black opacity-75 rounded-lg bg-gradient-to-b from-black to-neutral-600"></div>
@@ -53,7 +54,9 @@ function BannerItem({ item }) {
           </span>
         </div>
 
-        <Button className={`w-auto`}>Watch now</Button>
+        <Button onclick={() => navigate(`/movies/${id}`)} className={`w-auto`}>
+          Watch now
+        </Button>
       </div>
     </div>
   );

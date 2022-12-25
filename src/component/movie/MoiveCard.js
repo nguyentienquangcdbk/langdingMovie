@@ -21,7 +21,7 @@ const MoiveCard = ({ item }) => {
           <span>{vote_average}</span>
         </div>
         <Button bgColor="secondary" onclick={() => navigate(`/movies/${id}`)}>
-          watch now2
+          👉 Watch now 2
         </Button>
         {/* <button
           onClick={() => Navigate(`/movies/${id}`)}

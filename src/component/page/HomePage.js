@@ -7,11 +7,11 @@ const HomePage = () => {
     <Fragment>
       <Banner></Banner>
       <section className="movies-layout page-container-fluid mb-10">
-        <h2 className="text-white text-3xl mb-5">Now palying</h2>
+        <h2 className="text-white text-3xl mb-5">Now playing</h2>
         <MovieList type="now_playing"></MovieList>
       </section>
       <section className="movies-layout page-container-fluid mb-10">
-        <h2 className="text-white text-3xl mb-5">Top palying</h2>
+        <h2 className="text-white text-3xl mb-5">Top playing</h2>
         <MovieList type="top_rated"></MovieList>
       </section>
       <section className="movies-layout page-container-fluid mb-10">
